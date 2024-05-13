@@ -67,6 +67,13 @@ async function run() {
       res.send(result);
     })
 
+    app.delete('/volunteers/:id', async(req,res)=>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const result = await volunteersCollection.deleteOne(query);
+      res.send(result);
+    })
+
     //request collection
     app.get('/requests', async (req,res)=>{
       const cursor = requestsCollection.find();
