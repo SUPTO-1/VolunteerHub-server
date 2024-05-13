@@ -28,6 +28,7 @@ async function run() {
 
 
     const volunteersCollection = client.db('volunteerHub').collection('volunteer');
+    const requestsCollection = client.db('volunteerHub').collection('requests');
 
     app.get('/volunteers', async (req,res)=>{
         const cursor = volunteersCollection.find();
@@ -58,6 +59,20 @@ async function run() {
         const result = await volunteersCollection.insertOne(newVolunteer);
         res.send(result)
     });
+
+    //request collection
+    app.get('/requests', async (req,res)=>{
+      const cursor = requestsCollection.find();
+      const result = await cursor.toArray();
+      res.send(result)
+  })
+
+
+     app.post('/requests', async (req,res)=>{
+      const newRequest = req.body;
+      const result = await requestsCollection.insertOne(newRequest);
+      res.send(result)
+     })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
