@@ -74,6 +74,31 @@ async function run() {
       res.send(result);
     })
 
+
+    app.put('/volunteers/:id', async(req,res)=>{
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)};
+      const options = {upsert: true};
+      const updatedPost = req.body;
+      const post = {
+        $set: {
+          organizationName: updatedPost.organizationName,
+          organizationEmail: updatedPost.organizationEmail,
+          thumbnail: updatedPost.thumbnail,
+          postTitle: updatedPost.postTitle,
+          category: updatedPost.category,
+          description: updatedPost.description,
+          location: updatedPost.location,
+          volunteers: updatedPost.volunteers,
+          date: updatedPost.date,
+        },
+      };
+
+      const result = await volunteersCollection.updateOne(filter, post, options);
+      res.send(result)
+
+    })
+
     //request collection
     app.get('/requests', async (req,res)=>{
       const cursor = requestsCollection.find();
