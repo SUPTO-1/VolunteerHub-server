@@ -44,6 +44,12 @@ async function run() {
     })
 
 
+    app.get('/volunteers/sort',async(req,res)=>{
+      const query = {};
+      const result = await volunteersCollection.find(query).sort({date: 1}).toArray();
+      res.send(result);
+    })
+
     app.get('/volunteers/:id', async(req,res)=>{
       const id = req.params.id;
       // const query = {_id: new ObjectId(id)};
