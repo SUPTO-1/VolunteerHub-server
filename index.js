@@ -35,6 +35,13 @@ async function run() {
         res.send(result)
     })
 
+    app.get('/volunteers/search/:postTitle', async(req,res)=>{
+        const postTitle = req.params.postTitle;
+        const query = {postTitle: postTitle};
+        const result = await volunteersCollection.find(query).toArray();
+        res.send(result);
+    })
+
     app.post('/volunteers', async (req,res)=>{
         const newVolunteer = req.body;
         const result = await volunteersCollection.insertOne(newVolunteer);
