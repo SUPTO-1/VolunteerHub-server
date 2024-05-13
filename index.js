@@ -60,6 +60,13 @@ async function run() {
         res.send(result)
     });
 
+    app.get('/volunteers/user/:email', async(req,res)=>{
+      const email = req.params.email;
+      const query = {organizationEmail: email};
+      const result = await volunteersCollection.find(query).toArray();
+      res.send(result);
+    })
+
     //request collection
     app.get('/requests', async (req,res)=>{
       const cursor = requestsCollection.find();
