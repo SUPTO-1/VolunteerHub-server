@@ -105,6 +105,33 @@ async function run() {
 
     })
 
+
+    // chine rakho ekhan theke change kora shuru korchi
+    app.get('/volunteers/requests/:id', async(req,res)=>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const result = await volunteersCollection.findOne(query);
+      res.send(result);
+    })
+
+
+    app.put('/volunteers/requests/:id', async(req,res)=>{
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)};
+      const oldData = await volunteersCollection.findOne(filter);
+      const newVolunteers = parseInt(oldData.volunteers);
+      const updatedData = await volunteersCollection.updateOne(
+        filter,
+        {
+          $set: {volunteers: newVolunteers-1},
+        }
+      );
+      res.send(updatedData);
+    })
+
+
+    // chine rakho ekhane sesh korbo
+
     //request collection
     app.get('/requests', async (req,res)=>{
       const cursor = requestsCollection.find();
